@@ -3,6 +3,6 @@ image:
   image_height: 225
 
 camera:
-  viewport_width: 2
+  viewport_height: 2
   focal_length: 1.0
   origin: [0.0, 0.0, 0.0]

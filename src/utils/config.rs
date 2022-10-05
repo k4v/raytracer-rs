@@ -12,7 +12,7 @@ use crate::types::vec3::Vec3;
 pub struct Config {
     image_width: u64,
     image_height: u64,
-    viewport_width: u64,
+    viewport_height: u64,
     focal_length: f64,
     origin: Vec3
 }
@@ -35,7 +35,7 @@ impl Config {
                         Config {
                             image_width: config_object["image"]["image_width"].as_u64().unwrap_or(DEFAULT_CONFIG_OBJECT.image_width),
                             image_height: config_object["image"]["image_height"].as_u64().unwrap_or(DEFAULT_CONFIG_OBJECT.image_height),
-                            viewport_width: config_object["camera"]["viewport_width"].as_u64().unwrap_or(DEFAULT_CONFIG_OBJECT.viewport_width),
+                            viewport_height: config_object["camera"]["viewport_height"].as_u64().unwrap_or(DEFAULT_CONFIG_OBJECT.viewport_height),
                             focal_length: config_object["camera"]["focal_length"].as_f64().unwrap_or(DEFAULT_CONFIG_OBJECT.focal_length),
                             origin: Vec3::from(
                                 config_object["camera"]["origin"][0].as_f64().unwrap_or(DEFAULT_CONFIG_OBJECT.origin.x()),
@@ -71,20 +71,20 @@ impl Config {
         (self.image_width as f64) / (self.image_height as f64)
     }
 
-    pub fn viewport_width(&self) -> u64 {
-        self.viewport_width
+    pub fn viewport_height(&self) -> u64 {
+        self.viewport_height
     }
 
-    pub fn viewport_height(&self) -> u64 {
-        (self.viewport_width as f64 / self.aspect_ratio()) as u64
+    pub fn viewport_width(&self) -> u64 {
+        (self.viewport_height as f64 * self.aspect_ratio()) as u64
     }
 
     pub fn focal_length(&self) -> f64 {
         self.focal_length
     }
 
-    pub fn origin(&self) -> Vec3 {
-        self.origin
+    pub fn origin(&self) -> &Vec3 {
+        &self.origin
     }
 
 }
@@ -92,7 +92,7 @@ impl Config {
 const DEFAULT_CONFIG_OBJECT:Config = Config {
     image_width: 256,
     image_height: 256,
-    viewport_width: 2,
+    viewport_height: 2,
     focal_length: 1.0,
     origin: Vec3::from(0.0, 0.0, 0.0)
 };

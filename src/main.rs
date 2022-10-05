@@ -8,12 +8,14 @@ use utils::config::Config;
 use crate::types::ray::Ray;
 
 fn main() {
+
+    // Initial configuration object
     let config: Config = Config::from_yaml("settings.yaml");
 
-    let img_width = config.image_width();
-    let img_height = config.image_height();
+    eprintln!("Using config: {:?}", &config);
 
-    let origin = config.origin();
+    // World origin
+    let origin = config.origin().clone();
 
     let horizontal = Vec3::from(config.viewport_width() as f64, 0.0, 0.0);
     let vertical = Vec3::from(0.0, config.viewport_height() as f64, 0.0);
@@ -22,14 +24,13 @@ fn main() {
         - vertical.scaled(0.5)
         - Vec3::from(0.0, 0.0, config.focal_length());
 
-    println!("P3");
-    println!("{img_width}, {img_height}\n255");
+    println!("P3\n{}, {}\n255", config.image_width(), config.image_height());
 
-    for i in (0..img_height).rev() {
-        for j in 0..img_width {
+    for j in (0..config.image_height()).rev() {
+        for i in 0..config.image_width() {
 
-            let u = (i as f64) / ((img_width-1) as f64);
-            let v = (j as f64) / ((img_width-1) as f64);
+            let u = (i as f64) / ((config.image_width()-1) as f64);
+            let v = (j as f64) / ((config.image_height()-1) as f64);
 
             let r = Ray::from(
                 &origin,
