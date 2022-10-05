@@ -1,0 +1,8 @@
+image:
+  image_width: 400
+  image_height: 225
+
+camera:
+  viewport_height: 2
+  focal_length: 1.0
+  origin: [0.0, 0.0, 0.0]
