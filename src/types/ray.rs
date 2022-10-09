@@ -2,6 +2,7 @@
 
 use super::color::Color;
 
+use super::component::Component;
 use super::vec3::Vec3;
 
 type Point3 = Vec3;
@@ -12,14 +13,7 @@ pub struct Ray {
 }
 
 impl Ray {
-    pub fn new() -> Self {
-        Self {
-            _origin: Point3::new(),
-            _direction: Vec3::new()
-        }
-    }
-
-    pub fn from(origin: &Point3, direction: &Vec3) -> Self {
+    pub fn new(origin: &Point3, direction: &Vec3) -> Self {
         Self {
             _origin: origin.clone(),
             _direction: direction.clone()
@@ -38,9 +32,20 @@ impl Ray {
         self._origin + self._direction.scaled(t)
     }
 
-    pub fn ray_color(&self) -> Color {
+    pub fn ray_color(&self, components: &Vec<Box<dyn Component>>) -> Color {
+
+        for component in components {
+            if component.intersects_ray(&self) {
+                return Color::new(1.0, 0.0, 0.0);
+            }
+        }
+
         let unit_direction = self.direction().unit_vec();
         let t = 0.5*(unit_direction.y() + 1.0);
-        return Color::from(1.0, 1.0, 1.0).scaled(1.0-t) + Color::from(0.5, 0.7, 1.0).scaled(t);
+
+        let mut start_blend = Color::new(1.0, 1.0, 1.0);
+        let mut end_blend = Color::new(0.5, 0.7, 1.0);
+
+        return *(start_blend.scale(1.0-t)) + *(end_blend.scale(t));
     }
 }

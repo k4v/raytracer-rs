@@ -16,11 +16,11 @@ pub struct Vec3 {
 impl Vec3 {
 
     /// Create a new empty Vec3
-    pub const fn new() -> Self {
+    pub const fn new(x: f64, y: f64, z: f64) -> Self {
         Vec3 {
-            _x: 0.0,
-            _y: 0.0,
-            _z: 0.0,
+            _x: x,
+            _y: y,
+            _z: z
         }
     }
 
@@ -30,14 +30,6 @@ impl Vec3 {
             _x: v._x,
             _y: v._y,
             _z: v._z
-        }
-    }
-
-    pub const fn from(x: f64, y: f64, z: f64) -> Self {
-        Vec3 {
-            _x: x,
-            _y: y,
-            _z: z
         }
     }
 
@@ -71,6 +63,14 @@ impl Vec3 {
 
     pub fn len(&self) -> f64 {
         self.len_squared().sqrt()
+    }
+
+    pub fn scale(&mut self, factor: f64) -> &mut Self {
+        self._x *= factor;
+        self._y *= factor;
+        self._z *= factor;
+
+        self
     }
 
     pub fn scaled(&self, factor: f64) -> Self {
