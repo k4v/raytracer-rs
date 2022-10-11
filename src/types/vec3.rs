@@ -81,7 +81,7 @@ impl Vec3 {
         }
     }
 
-    pub fn unit_vec(&self) -> Vec3 {
+    pub fn unit_vector(&self) -> Vec3 {
         let len = self.len();
         Vec3 {
             _x: self._x/len,

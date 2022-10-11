@@ -5,6 +5,7 @@ use types::vec3::Vec3;
 use types::color;
 use utils::config::Config;
 
+use crate::types::color::get_color;
 use crate::types::component::{Component, Sphere};
 use crate::types::ray::Ray;
 
@@ -26,12 +27,15 @@ fn main() {
         - Vec3::new(0.0, 0.0, config.focal_length());
 
     // Create scene objects
-    let sphere: Sphere = Sphere::new(&Vec3::new(0.0, 0.0, -1.0), 0.5);
-
     let mut scene_objects: Vec<Box<dyn Component>> = vec![];
-    scene_objects.push(Box::new(sphere));
+    /*scene_objects.push(Box::new(Sphere::new(&Vec3::new(-1.0, 0.0, -1.0), 0.5)));
+    scene_objects.push(Box::new(Sphere::new(&Vec3::new(0.75, 1.0, -1.0), 0.5)));*/
 
     println!("P3\n{},{}\n255", config.image_width(), config.image_height());
+
+    eprintln!("{:?}", Vec3::new(1.0, 2.0, 3.0).scale(0.5));
+    eprintln!("{:?}", Vec3::new(1.0, 2.0, 3.0).scaled(0.5));
+    eprintln!("{:?},{:?},{:?}", horizontal, vertical, lower_left_corner);
 
     for j in (0..config.image_height()).rev() {
         for i in 0..config.image_width() {
@@ -44,7 +48,14 @@ fn main() {
                 &(lower_left_corner + horizontal.scaled(u) + vertical.scaled(v) - origin)
             );
 
-            color::print_color(&r.ray_color(&scene_objects));
+            let pixel_color = &r.ray_color(&scene_objects);
+            if pixel_color.x() > 1.0 || pixel_color.y() > 1.0 || pixel_color.z() > 1.0 {
+                eprintln!("Bad pixel: i:{}, u:{}, j:{}, v:{}, ray:{:?}, color:{:?}, print_color:{:?}",
+                    i, u, j, v, r, pixel_color, get_color(pixel_color));
+                    return;
+            } else {
+                color::print_color(pixel_color);
+            }
         }
     }
 }

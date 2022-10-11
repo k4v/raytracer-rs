@@ -7,6 +7,7 @@ use super::vec3::Vec3;
 
 type Point3 = Vec3;
 
+#[derive(Debug)]
 pub struct Ray {
     _origin: Point3,
     _direction: Vec3
@@ -40,7 +41,7 @@ impl Ray {
             }
         }
 
-        let unit_direction = self.direction().unit_vec();
+        let unit_direction = self.direction().unit_vector();
         let t = 0.5*(unit_direction.y() + 1.0);
 
         let mut start_blend = Color::new(1.0, 1.0, 1.0);

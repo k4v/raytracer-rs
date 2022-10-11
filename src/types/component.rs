@@ -30,12 +30,12 @@ impl Component for Sphere {
     }
 
     fn intersects_ray(&self, ray: &Ray) -> bool {
-        let ray_trace: Vec3 = *ray.origin() - *self.center();
-        let a: f64 = ray.direction().dot(ray.direction());
-        let b: f64 = 2.0 * ray_trace.dot(ray.direction());
-        let c: f64 = ray_trace.dot(&ray_trace) - (self.radius() * self.radius());
+        let ray_trace = *ray.origin() - *self.center();
+        let a = ray.direction().dot(ray.direction());
+        let b = 2.0 * ray_trace.dot(ray.direction());
+        let c = ray_trace.dot(&ray_trace) - (self.radius() * self.radius());
 
-        let discriminant: f64 = (b*b) - (4.0*a*c);
+        let discriminant = (b*b) - (4.0*a*c);
         
         discriminant > 0.0
     }
