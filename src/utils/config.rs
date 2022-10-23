@@ -37,7 +37,7 @@ impl Config {
                             image_height: config_object["image"]["image_height"].as_u64().unwrap_or(DEFAULT_CONFIG_OBJECT.image_height),
                             viewport_height: config_object["camera"]["viewport_height"].as_u64().unwrap_or(DEFAULT_CONFIG_OBJECT.viewport_height),
                             focal_length: config_object["camera"]["focal_length"].as_f64().unwrap_or(DEFAULT_CONFIG_OBJECT.focal_length),
-                            origin: Vec3::from(
+                            origin: Vec3::new(
                                 config_object["camera"]["origin"][0].as_f64().unwrap_or(DEFAULT_CONFIG_OBJECT.origin.x()),
                                 config_object["camera"]["origin"][1].as_f64().unwrap_or(DEFAULT_CONFIG_OBJECT.origin.y()),
                                 config_object["camera"]["origin"][2].as_f64().unwrap_or(DEFAULT_CONFIG_OBJECT.origin.z())
@@ -94,5 +94,5 @@ const DEFAULT_CONFIG_OBJECT:Config = Config {
     image_height: 256,
     viewport_height: 2,
     focal_length: 1.0,
-    origin: Vec3::from(0.0, 0.0, 0.0)
+    origin: Vec3::new(0.0, 0.0, 0.0)
 };
