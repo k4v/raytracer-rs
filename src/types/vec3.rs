@@ -58,7 +58,7 @@ impl Vec3 {
     }
 
     pub fn len_squared(&self) -> f64 {
-        (self._x * self._x) + (self._y + self._y) + (self._z * self._z)
+        (self._x * self._x) + (self._y * self._y) + (self._z * self._z)
     }
 
     pub fn len(&self) -> f64 {
@@ -82,11 +82,11 @@ impl Vec3 {
     }
 
     pub fn unit_vector(&self) -> Vec3 {
-        let len = self.len();
+        let length = self.len();
         Vec3 {
-            _x: self._x/len,
-            _y: self._y/len,
-            _z: self._z/len
+            _x: self._x/length,
+            _y: self._y/length,
+            _z: self._z/length
         }
     }
 

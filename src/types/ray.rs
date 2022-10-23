@@ -42,11 +42,11 @@ impl Ray {
         }
 
         let unit_direction = self.direction().unit_vector();
-        let t = 0.5*(unit_direction.y() + 1.0);
+        let t = (unit_direction.y() + 1.0)*0.5;
 
-        let mut start_blend = Color::new(1.0, 1.0, 1.0);
-        let mut end_blend = Color::new(0.5, 0.7, 1.0);
+        let start_blend = Color::new(1.0, 1.0, 1.0);
+        let end_blend = Color::new(0.5, 0.7, 1.0);
 
-        return *(start_blend.scale(1.0-t)) + *(end_blend.scale(t));
+        return start_blend.scaled(1.0-t) + end_blend.scaled(t);
     }
 }

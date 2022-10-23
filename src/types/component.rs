@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use super::{vec3::Vec3, ray::Ray};
 
 pub trait Component {
