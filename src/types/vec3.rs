@@ -102,6 +102,14 @@ impl Vec3 {
         }
     }
 
+    pub fn zero_vec() -> Self {
+        Vec3 { _x:0.0, _y:0.0, _z:0.0 }
+    }
+
+    pub fn ones_vec() -> Self {
+        Vec3 { _x:1.0, _y:1.0, _z:1.0 }
+    }
+
 }
 
 /// Implement unary minus (-v) operation for Vec3
