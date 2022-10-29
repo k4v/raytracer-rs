@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use super::{vec3::Vec3, ray::Ray};
+use super::{ray::Ray, vec3::Vec3};
 
 pub trait Component {
     fn center(&self) -> &Vec3;
@@ -10,14 +10,14 @@ pub trait Component {
 
 pub struct Sphere {
     _center: Vec3,
-    _radius: f64
+    _radius: f64,
 }
 
 impl Sphere {
     pub fn new(center: &Vec3, radius: f64) -> Self {
         Sphere {
             _center: center.clone(),
-            _radius: radius
+            _radius: radius,
         }
     }
 }
@@ -37,8 +37,8 @@ impl Component for Sphere {
         let b = ray_trace.dot(ray.direction());
         let c = ray_trace.len_squared() - (self._radius * self._radius);
 
-        let discriminant = (b*b) - (a*c);
-        
+        let discriminant = (b * b) - (a * c);
+
         discriminant > 0.0
     }
 }
