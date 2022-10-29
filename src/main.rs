@@ -24,7 +24,7 @@ fn main() {
 
     // Create scene objects
     let mut scene_objects: Vec<Box<dyn Component>> = vec![];
-    scene_objects.push(Box::new(Sphere::new(&Vec3::new(-1.0, 0.0, -2.0), 0.5)));
+    scene_objects.push(Box::new(Sphere::new(&Vec3::new(0.0, 0.0, -1.5), 0.5)));
     scene_objects.push(Box::new(Sphere::new(&Vec3::new(0.75, 1.0, -2.0), 0.5)));
 
     println!("P3\n{},{}\n255", config.image_width(), config.image_height());
@@ -34,13 +34,14 @@ fn main() {
     for j in (0..config.image_height()).rev() {
         for i in 0..config.image_width() {
 
-            let u = (i as f64) / ((config.image_width()) as f64);
-            let v = (j as f64) / ((config.image_height()) as f64);
+            let u = (i as f64) / (config.image_width() as f64);
+            let v = (j as f64) / (config.image_height() as f64);
 
             let uv = lower_left_corner + horizontal.scaled(u) + vertical.scaled(v);
             let r = Ray::new(&origin, &(uv - origin));
 
             color::print_color(&r.ray_color(&scene_objects));
         }
+        println!();
     }
 }
