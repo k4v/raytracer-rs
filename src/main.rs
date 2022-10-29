@@ -1,5 +1,6 @@
 mod utils;
 mod types;
+pub mod tests;
 
 use types::vec3::Vec3;
 use types::color;
