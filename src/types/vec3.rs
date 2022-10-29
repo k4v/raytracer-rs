@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::{ops::{Neg, AddAssign, MulAssign, DivAssign, Add, Sub, Mul}};
+use std::{ops::{Neg, AddAssign, Add, Sub, SubAssign}};
 use std::fmt::Display;
 
 use serde::{Deserialize, Serialize};
@@ -125,7 +125,7 @@ impl Neg for Vec3 {
     }
 }
 
-/// Implement add and assign (v+=) operation for Vec3
+/// Implement add and assign (v+, v+=) operation for Vec3
 impl AddAssign for Vec3 {
     fn add_assign(&mut self, rhs: Self) {
         self._x += rhs._x;
@@ -146,6 +146,15 @@ impl Add for Vec3 {
     }
 }
 
+/// Implement sub and assign (v-, v-=) operation for Vec3
+impl SubAssign for Vec3 {
+    fn sub_assign(&mut self, rhs: Self) {
+        self._x -= rhs._x;
+        self._y -= rhs._y;
+        self._z -= rhs._z;
+    }
+}
+
 impl Sub for Vec3 {
     type Output = Self;
 
@@ -155,35 +164,6 @@ impl Sub for Vec3 {
             _y: self._y - rhs._y,
             _z: self._z - rhs._z,
         }
-    }
-}
-
-/// Implement multiply and assign (v*=) operation for Vec3
-impl MulAssign for Vec3 {
-    fn mul_assign(&mut self, rhs: Self) {
-        self._x *= rhs._x;
-        self._y *= rhs._y;
-        self._z *= rhs._z;
-    }
-}
-
-impl Mul for Vec3 {
-    type Output = Self;
-
-    fn mul(self, rhs: Self) -> Self::Output {
-        Vec3 {
-            _x: self._x * rhs._x,
-            _y: self._y * rhs._y,
-            _z: self._z * rhs._z,
-        }
-    }
-}
-
-impl DivAssign for Vec3 {
-    fn div_assign(&mut self, rhs: Self) {
-        self._x /= rhs._x;
-        self._y /= rhs._y;
-        self._z /= rhs._z;
     }
 }
 
