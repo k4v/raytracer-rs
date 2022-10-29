@@ -120,20 +120,20 @@ mod tests {
     #[test]
     fn test_add() {
         let v1: Vec3 = Vec3::new(0.0, 1.0, -2.0);
-        
+
         {
             let v2: Vec3 = Vec3::zero_vec();
-            assert_eq!(v1+v2, v1);
+            assert_eq!(v1 + v2, v1);
         }
 
         {
             let v2: Vec3 = Vec3::ones_vec();
-            assert_eq!(v1+v2, Vec3::new(1.0, 2.0, -1.0));
+            assert_eq!(v1 + v2, Vec3::new(1.0, 2.0, -1.0));
         }
 
         {
             let v2: Vec3 = Vec3::new(1.0, -1.0, 0.0);
-            assert_eq!(v1+v2, Vec3::new(1.0, 0.0, -2.0));
+            assert_eq!(v1 + v2, Vec3::new(1.0, 0.0, -2.0));
         }
     }
 
@@ -147,20 +147,20 @@ mod tests {
     #[test]
     fn test_sub() {
         let v1: Vec3 = Vec3::new(0.0, 1.0, -2.0);
-        
+
         {
             let v2: Vec3 = Vec3::zero_vec();
-            assert_eq!(v1-v2, v1);
+            assert_eq!(v1 - v2, v1);
         }
 
         {
             let v2: Vec3 = Vec3::ones_vec();
-            assert_eq!(v1-v2, Vec3::new(-1.0, 0.0, -3.0));
+            assert_eq!(v1 - v2, Vec3::new(-1.0, 0.0, -3.0));
         }
 
         {
             let v2: Vec3 = Vec3::new(1.0, -1.0, 0.0);
-            assert_eq!(v1-v2, Vec3::new(-1.0, 2.0, -2.0));
+            assert_eq!(v1 - v2, Vec3::new(-1.0, 2.0, -2.0));
         }
     }
 }

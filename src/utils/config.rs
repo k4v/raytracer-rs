@@ -2,9 +2,9 @@
 
 extern crate serde_yaml;
 
-use std::fs::File;
 use serde::{Deserialize, Serialize};
 use serde_yaml::from_reader;
+use std::fs::File;
 
 use crate::types::vec3::Vec3;
 
@@ -14,7 +14,7 @@ pub struct Config {
     image_height: u64,
     viewport_height: u64,
     focal_length: f64,
-    origin: Vec3
+    origin: Vec3,
 }
 
 impl Config {
@@ -25,23 +25,35 @@ impl Config {
     }
 
     pub fn from_yaml(config_yaml: &str) -> Self {
-
         match File::open(config_yaml) {
             Ok(config_file) => {
                 match from_reader::<std::fs::File, serde_yaml::Value>(config_file) {
                     Ok(config_object) => {
-
                         // If config yaml available and valid, build Config object from that file and return
                         Config {
-                            image_width: config_object["image"]["image_width"].as_u64().unwrap_or(DEFAULT_CONFIG_OBJECT.image_width),
-                            image_height: config_object["image"]["image_height"].as_u64().unwrap_or(DEFAULT_CONFIG_OBJECT.image_height),
-                            viewport_height: config_object["camera"]["viewport_height"].as_u64().unwrap_or(DEFAULT_CONFIG_OBJECT.viewport_height),
-                            focal_length: config_object["camera"]["focal_length"].as_f64().unwrap_or(DEFAULT_CONFIG_OBJECT.focal_length),
+                            image_width: config_object["image"]["image_width"]
+                                .as_u64()
+                                .unwrap_or(DEFAULT_CONFIG_OBJECT.image_width),
+                            image_height: config_object["image"]["image_height"]
+                                .as_u64()
+                                .unwrap_or(DEFAULT_CONFIG_OBJECT.image_height),
+                            viewport_height: config_object["camera"]["viewport_height"]
+                                .as_u64()
+                                .unwrap_or(DEFAULT_CONFIG_OBJECT.viewport_height),
+                            focal_length: config_object["camera"]["focal_length"]
+                                .as_f64()
+                                .unwrap_or(DEFAULT_CONFIG_OBJECT.focal_length),
                             origin: Vec3::new(
-                                config_object["camera"]["origin"][0].as_f64().unwrap_or(DEFAULT_CONFIG_OBJECT.origin.x()),
-                                config_object["camera"]["origin"][1].as_f64().unwrap_or(DEFAULT_CONFIG_OBJECT.origin.y()),
-                                config_object["camera"]["origin"][2].as_f64().unwrap_or(DEFAULT_CONFIG_OBJECT.origin.z())
-                            )
+                                config_object["camera"]["origin"][0]
+                                    .as_f64()
+                                    .unwrap_or(DEFAULT_CONFIG_OBJECT.origin.x()),
+                                config_object["camera"]["origin"][1]
+                                    .as_f64()
+                                    .unwrap_or(DEFAULT_CONFIG_OBJECT.origin.y()),
+                                config_object["camera"]["origin"][2]
+                                    .as_f64()
+                                    .unwrap_or(DEFAULT_CONFIG_OBJECT.origin.z()),
+                            ),
                         }
                     }
                     Err(_) => {
@@ -49,7 +61,7 @@ impl Config {
                         return DEFAULT_CONFIG_OBJECT;
                     }
                 }
-            },
+            }
             Err(_) => {
                 eprintln!("Error opening settings file");
                 return DEFAULT_CONFIG_OBJECT;
@@ -86,13 +98,12 @@ impl Config {
     pub fn origin(&self) -> &Vec3 {
         &self.origin
     }
-
 }
 
-const DEFAULT_CONFIG_OBJECT:Config = Config {
+const DEFAULT_CONFIG_OBJECT: Config = Config {
     image_width: 256,
     image_height: 256,
     viewport_height: 2,
     focal_length: 1.0,
-    origin: Vec3::new(0.0, 0.0, 0.0)
+    origin: Vec3::new(0.0, 0.0, 0.0),
 };

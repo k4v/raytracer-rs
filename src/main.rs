@@ -1,16 +1,15 @@
-mod utils;
-mod types;
 pub mod tests;
+mod types;
+mod utils;
 
-use types::vec3::Vec3;
 use types::color;
+use types::vec3::Vec3;
 use utils::config::Config;
 
 use crate::types::component::{Component, Sphere};
 use crate::types::ray::Ray;
 
 fn main() {
-
     // Initial configuration object
     let config: Config = Config::from_yaml("settings.yaml");
 
@@ -21,7 +20,8 @@ fn main() {
 
     let horizontal = Vec3::new(config.viewport_width() as f64, 0.0, 0.0);
     let vertical = Vec3::new(0.0, config.viewport_height() as f64, 0.0);
-    let lower_left_corner = origin - Vec3::new(horizontal.x()/2.0, vertical.y()/2.0, config.focal_length());
+    let lower_left_corner =
+        origin - Vec3::new(horizontal.x() / 2.0, vertical.y() / 2.0, config.focal_length());
 
     // Create scene objects
     let mut scene_objects: Vec<Box<dyn Component>> = vec![];
@@ -34,7 +34,6 @@ fn main() {
 
     for j in (0..config.image_height()).rev() {
         for i in 0..config.image_width() {
-
             let u = (i as f64) / (config.image_width() as f64);
             let v = (j as f64) / (config.image_height() as f64);
 
