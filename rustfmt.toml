@@ -1,6 +1,6 @@
 # Use verbose output.
 # Default: false
-verbose = "Normal"
+#   verbose = "Quiet"
 
 # Do not reformat out of line modules.
 # Default: false
@@ -79,7 +79,7 @@ newline_style = "Unix"
 # Argument density in functions.
 # Values: Compressed | Tall | CompressedIfEmpty | Vertical
 # Default: Tall
-fn_args_density = "Compressed"
+#   fn_args_density = "Compressed"
 
 # Layout of function arguments.
 # Values: Visual | Block | BlockAlways

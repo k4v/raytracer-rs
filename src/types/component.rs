@@ -44,6 +44,6 @@ impl Component for Sphere {
 
         let discriminant = (b * b) - (a * c);
 
-        discriminant > 0.0
+        discriminant >= 0.0
     }
 }

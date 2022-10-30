@@ -22,11 +22,31 @@ mod tests {
         let sphere = Sphere::new(&Vec3::new(0.0, 1.0, -2.0), 1.0);
         assert!(sphere.is_some());
 
+        // Ray inside sphere
         {
-            let ray = Ray::new(&Vec3::new(0.0, 1.0, -3.0), &Vec3::new(0.0, 0.0, -1.0));
+            let ray = Ray::new(&Vec3::new(0.0, 1.0, -2.0), &Vec3::new(0.0, 0.0, -1.0));
             assert!(sphere.as_ref().unwrap().intersects_ray(&ray));
         }
 
+        // Ray tangential to sphere
+        {
+            let ray = Ray::new(&Vec3::new(0.0, 1.0, -3.0), &Vec3::new(0.0, 1.0, 0.0));
+            assert!(sphere.as_ref().unwrap().intersects_ray(&ray));
+        }
+
+        // Ray through sphere
+        {
+            let ray = Ray::new(&Vec3::new(0.0, 1.0, 0.0), &Vec3::new(1.0, 1.0, -3.0));
+            assert!(sphere.as_ref().unwrap().intersects_ray(&ray));
+        }
+    }
+
+    #[test]
+    fn test_not_intersects_ray() {
+        let sphere = Sphere::new(&Vec3::new(0.0, 1.0, -2.0), 1.0);
+        assert!(sphere.is_some());
+
+        // Ray outside amd away from sphere
         {
             let ray = Ray::new(&Vec3::new(0.0, 1.0, -4.0), &Vec3::new(1.0, 1.0, -2.0));
             assert!(sphere.as_ref().unwrap().intersects_ray(&ray) == false);
