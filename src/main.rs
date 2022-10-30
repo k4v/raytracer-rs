@@ -25,8 +25,8 @@ fn main() {
 
     // Create scene objects
     let mut scene_objects: Vec<Box<dyn Component>> = vec![];
-    scene_objects.push(Box::new(Sphere::new(&Vec3::new(0.0, 0.0, -1.5), 0.5)));
-    scene_objects.push(Box::new(Sphere::new(&Vec3::new(0.75, 1.0, -2.0), 0.5)));
+    scene_objects.push(Box::new(Sphere::new(&Vec3::new(0.0, 0.0, -1.5), 0.5).unwrap()));
+    scene_objects.push(Box::new(Sphere::new(&Vec3::new(0.75, 1.0, -2.0), 0.5).unwrap()));
 
     println!("P3\n{},{}\n255", config.image_width(), config.image_height());
 

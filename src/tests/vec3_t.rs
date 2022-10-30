@@ -3,7 +3,7 @@ mod tests {
     use crate::types::vec3::Vec3;
 
     #[test]
-    fn test_instantiation() {
+    fn test_instantiation_and_getters() {
         // Instantiation using Vec3::new()
         let new_v: Vec3 = Vec3::new(0.0, 1.0, -2.0);
         assert_eq!(new_v.x(), 0.0);
@@ -19,14 +19,6 @@ mod tests {
 
         let unit_v: Vec3 = Vec3::ones_vec();
         assert_eq!(unit_v, Vec3::new(1.0, 1.0, 1.0));
-    }
-
-    #[test]
-    fn test_getters() {
-        let new_v: Vec3 = Vec3::new(0.0, 1.0, -2.0);
-        assert_eq!(new_v.x(), 0.0);
-        assert_eq!(new_v.y(), 1.0);
-        assert_eq!(new_v.z(), -2.0);
     }
 
     #[test]

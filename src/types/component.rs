@@ -8,17 +8,22 @@ pub trait Component {
     fn intersects_ray(&self, ray: &Ray) -> bool;
 }
 
+#[derive(Copy, Clone)]
 pub struct Sphere {
     _center: Vec3,
     _radius: f64,
 }
 
 impl Sphere {
-    pub fn new(center: &Vec3, radius: f64) -> Self {
-        Sphere {
+    pub fn new(center: &Vec3, radius: f64) -> Option<Self> {
+        if radius <= 0.0 {
+            return None;
+        }
+
+        Some(Sphere {
             _center: center.clone(),
             _radius: radius,
-        }
+        })
     }
 }
 
