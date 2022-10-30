@@ -1,6 +1,6 @@
 image:
-  image_width: 480
-  image_height: 270
+  image_width: 1280
+  image_height: 720
 
 camera:
   viewport_height: 2
