@@ -21,7 +21,7 @@ impl Sphere {
         }
 
         Some(Sphere {
-            _center: center.clone(),
+            _center: *center,
             _radius: radius,
         })
     }

@@ -16,8 +16,8 @@ pub struct Ray {
 impl Ray {
     pub fn new(origin: &Point3, direction: &Vec3) -> Self {
         Self {
-            _origin: origin.clone(),
-            _direction: direction.clone(),
+            _origin: *origin,
+            _direction: *direction,
         }
     }
 
@@ -35,7 +35,7 @@ impl Ray {
 
     pub fn ray_color(&self, components: &Vec<Box<dyn Component>>) -> Color {
         for component in components {
-            if component.intersects_ray(&self) {
+            if component.intersects_ray(self) {
                 return Color::new(1.0, 0.0, 0.0);
             }
         }
@@ -46,6 +46,6 @@ impl Ray {
         let start_blend = Color::new(1.0, 1.0, 1.0);
         let end_blend = Color::new(0.5, 0.7, 1.0);
 
-        return start_blend.scaled(1.0 - t) + end_blend.scaled(t);
+        start_blend.scaled(1.0 - t) + end_blend.scaled(t)
     }
 }
