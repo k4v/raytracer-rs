@@ -46,25 +46,25 @@ impl Config {
                             origin: Vec3::new(
                                 config_object["camera"]["origin"][0]
                                     .as_f64()
-                                    .unwrap_or(DEFAULT_CONFIG_OBJECT.origin.x()),
+                                    .unwrap_or_else(|| DEFAULT_CONFIG_OBJECT.origin.x()),
                                 config_object["camera"]["origin"][1]
                                     .as_f64()
-                                    .unwrap_or(DEFAULT_CONFIG_OBJECT.origin.y()),
+                                    .unwrap_or_else(|| DEFAULT_CONFIG_OBJECT.origin.y()),
                                 config_object["camera"]["origin"][2]
                                     .as_f64()
-                                    .unwrap_or(DEFAULT_CONFIG_OBJECT.origin.z()),
+                                    .unwrap_or_else(|| DEFAULT_CONFIG_OBJECT.origin.z()),
                             ),
                         }
                     }
                     Err(_) => {
                         eprintln!("Error loading settings from file");
-                        return DEFAULT_CONFIG_OBJECT;
+                        DEFAULT_CONFIG_OBJECT
                     }
                 }
             }
             Err(_) => {
                 eprintln!("Error opening settings file");
-                return DEFAULT_CONFIG_OBJECT;
+                DEFAULT_CONFIG_OBJECT
             }
         }
     }
