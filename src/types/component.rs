@@ -15,12 +15,12 @@ pub struct Sphere {
 }
 
 impl Sphere {
-    pub fn new(center: &Vec3, radius: f64) -> Option<Self> {
+    pub fn new(center: &Vec3, radius: f64) -> Result<Self, &str> {
         if radius <= 0.0 {
-            return None;
+            return Err("Sphere radius must be greater than 0");
         }
 
-        Some(Sphere {
+        Ok(Sphere {
             _center: *center,
             _radius: radius,
         })

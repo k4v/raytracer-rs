@@ -41,7 +41,11 @@ impl Ray {
         }
 
         let unit_direction = self.direction().unit_vector();
-        let t = (unit_direction.y() + 1.0) * 0.5;
+        let t = (unit_direction
+            .expect("Weirdly, the ray is heading in the null direction")
+            .y()
+            + 1.0)
+            * 0.5;
 
         let start_blend = Color::new(1.0, 1.0, 1.0);
         let end_blend = Color::new(0.5, 0.7, 1.0);
