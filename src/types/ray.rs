@@ -40,8 +40,9 @@ impl Ray {
             }
         }
 
-        let unit_direction = self.direction().unit_vector();
-        let t = (unit_direction
+        let t = (self
+            .direction()
+            .unit_vector()
             .expect("Weirdly, the ray is heading in the null direction")
             .y()
             + 1.0)
