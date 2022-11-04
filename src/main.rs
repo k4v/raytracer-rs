@@ -31,8 +31,6 @@ fn main() {
 
     println!("P3\n{},{}\n255", config.image_width(), config.image_height());
 
-    eprintln!("{:?},{:?},{:?}", horizontal, vertical, lower_left_corner);
-
     for j in (0..config.image_height()).rev() {
         for i in 0..config.image_width() {
             let u = (i as f64) / (config.image_width() as f64);

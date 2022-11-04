@@ -15,12 +15,12 @@ pub struct Sphere {
 }
 
 impl Sphere {
-    pub fn new(center: &Vec3, radius: f64) -> Option<Self> {
+    pub fn new(center: &Vec3, radius: f64) -> Result<Self, &str> {
         if radius <= 0.0 {
-            return None;
+            return Err("Sphere radius must be greater than 0");
         }
 
-        Some(Sphere {
+        Ok(Sphere {
             _center: *center,
             _radius: radius,
         })
@@ -37,13 +37,12 @@ impl Component for Sphere {
     }
 
     fn intersects_ray(&self, ray: &Ray) -> bool {
-        let ray_trace = *ray.origin() - self._center;
+        let ray_trace = *ray.origin() - *self.center();
         let a = ray.direction().len_squared();
         let b = ray_trace.dot(ray.direction());
         let c = ray_trace.len_squared() - (self._radius * self._radius);
 
         let discriminant = (b * b) - (a * c);
-
         discriminant >= 0.0
     }
 }

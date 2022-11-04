@@ -79,13 +79,17 @@ impl Vec3 {
         }
     }
 
-    pub fn unit_vector(&self) -> Vec3 {
+    pub fn unit_vector(&self) -> Result<Vec3, &str> {
         let length = self.len();
-        Vec3 {
+
+        if length == 0.0 {
+            return Err("Null vector does not have a unit vector");
+        }
+        Ok(Vec3 {
             _x: self._x / length,
             _y: self._y / length,
             _z: self._z / length,
-        }
+        })
     }
 
     pub fn dot(&self, rhs: &Self) -> f64 {

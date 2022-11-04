@@ -1,5 +1,6 @@
 #[cfg(test)]
 mod tests {
+    const DOUBLE_TEST_EPSILON: f64 = 0.00001;
     use crate::types::vec3::Vec3;
 
     #[test]
@@ -52,6 +53,18 @@ mod tests {
 
         mut_v.scale(0.0);
         assert_eq!(mut_v, Vec3::zero_vec());
+    }
+
+    #[test]
+    fn test_unit_vec() {
+        let v1 = Vec3::new(2.0, 0.0, -4.0);
+        let v1_u = v1.unit_vector();
+        assert!(v1_u.is_ok());
+        assert!((v1_u.unwrap().len_squared() - 1.0).abs() <= DOUBLE_TEST_EPSILON);
+
+        let v2 = Vec3::new(0.0, 0.0, 0.0);
+        let v2_u = v2.unit_vector();
+        assert!(v2_u.is_err());
     }
 
     #[test]
