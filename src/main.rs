@@ -24,10 +24,9 @@ fn main() {
         origin - Vec3::new(horizontal.x() / 2.0, vertical.y() / 2.0, config.focal_length());
 
     // Create scene objects
-    let scene_objects: Vec<Box<dyn Component>> = vec![
-        Box::new(Sphere::new(&Vec3::new(0.0, 0.0, -1.5), 0.5).unwrap()),
-        Box::new(Sphere::new(&Vec3::new(0.75, 1.0, -2.0), 0.5).unwrap()),
-    ];
+    let scene_objects: Vec<Box<dyn Component>> = vec![Box::new(
+        Sphere::new(&Vec3::new(0.0, 0.0, -1.5), 0.5).unwrap(),
+    )];
 
     println!("P3\n{},{}\n255", config.image_width(), config.image_height());
 

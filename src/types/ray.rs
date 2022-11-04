@@ -35,8 +35,13 @@ impl Ray {
 
     pub fn ray_color(&self, components: &Vec<Box<dyn Component>>) -> Color {
         for component in components {
-            if component.intersects_ray(self) {
-                return Color::new(1.0, 0.0, 0.0);
+            let intersection = component.intersects_ray(self);
+            if intersection.is_some() {
+                let normal = (self.at(intersection.unwrap()) - *component.center())
+                    .unit_vector()
+                    .expect("Ray component intersection invalid");
+                return Color::new(1.0 + normal.x(), 1.0 + normal.y(), 1.0 + normal.z())
+                    .scaled(0.5);
             }
         }
 
