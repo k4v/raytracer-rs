@@ -4,8 +4,7 @@ use super::{ray::Ray, vec3::Vec3};
 
 pub trait Component {
     fn center(&self) -> &Vec3;
-    fn radius(&self) -> f64;
-    fn intersects_ray(&self, ray: &Ray) -> bool;
+    fn intersects_ray(&self, ray: &Ray) -> Option<f64>;
 }
 
 #[derive(Copy, Clone)]
@@ -32,17 +31,23 @@ impl Component for Sphere {
         &self._center
     }
 
-    fn radius(&self) -> f64 {
-        self._radius
-    }
-
-    fn intersects_ray(&self, ray: &Ray) -> bool {
+    fn intersects_ray(&self, ray: &Ray) -> Option<f64> {
         let ray_trace = *ray.origin() - *self.center();
         let a = ray.direction().len_squared();
         let b = ray_trace.dot(ray.direction());
         let c = ray_trace.len_squared() - (self._radius * self._radius);
 
         let discriminant = (b * b) - (a * c);
-        discriminant >= 0.0
+        if discriminant < 0.0 {
+            None
+        } else {
+            Some((-b - discriminant.sqrt()) / a)
+        }
+    }
+}
+
+impl Sphere {
+    pub fn radius(&self) -> f64 {
+        self._radius
     }
 }
