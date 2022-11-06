@@ -2,12 +2,13 @@ pub mod tests;
 mod types;
 mod utils;
 
+use std::rc::Rc;
+
 use types::color;
 use types::vec3::Vec3;
 use utils::config::Config;
 
-use crate::types::component::{Component, Sphere};
-use crate::types::ray::Ray;
+use crate::types::{traceable::TraceableGroup, ray::Ray, sphere::Sphere};
 
 fn main() {
     // Initial configuration object
@@ -24,9 +25,12 @@ fn main() {
         origin - Vec3::new(horizontal.x() / 2.0, vertical.y() / 2.0, config.focal_length());
 
     // Create scene objects
-    let scene_objects: Vec<Box<dyn Component>> = vec![Box::new(
-        Sphere::new(&Vec3::new(0.0, 0.0, -1.5), 0.5).unwrap(),
-    )];
+    let scene_objects = TraceableGroup {
+        objects: vec![
+            Rc::new(Box::new(Sphere::new(&Vec3::new(0.0, 0.0, -1.0), 0.5).unwrap())),
+            Rc::new(Box::new(Sphere::new(&Vec3::new(0.0, -100.5, -1.0), 100.0).unwrap())),
+        ],
+    };
 
     println!("P3\n{},{}\n255", config.image_width(), config.image_height());
 
