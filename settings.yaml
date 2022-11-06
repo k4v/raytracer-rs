@@ -1,6 +1,7 @@
 image:
   image_width: 1600
   image_height: 1200
+  samples_per_pixel: 100
 
 camera:
   viewport_height: 3

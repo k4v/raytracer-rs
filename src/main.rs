@@ -7,7 +7,9 @@ use types::color;
 use types::vec3::Vec3;
 use utils::config::Config;
 
-use crate::components::{ray::Ray, sphere::Sphere, traceable::TraceableGroup};
+use crate::components::{camera::Camera, sphere::Sphere, traceable::TraceableGroup};
+use crate::types::color::Color;
+use crate::utils::utilities::random_f64;
 
 fn main() {
     // Initial configuration object
@@ -15,13 +17,7 @@ fn main() {
 
     eprintln!("Using config: {:?}", &config);
 
-    // World origin
-    let origin = *config.origin();
-
-    let horizontal = Vec3::new(config.viewport_width() as f64, 0.0, 0.0);
-    let vertical = Vec3::new(0.0, config.viewport_height() as f64, 0.0);
-    let lower_left_corner =
-        origin - Vec3::new(horizontal.x() / 2.0, vertical.y() / 2.0, config.focal_length());
+    let camera = Camera::configure(&config);
 
     // Create scene objects
     let scene_objects = TraceableGroup {
@@ -35,13 +31,16 @@ fn main() {
 
     for j in (0..config.image_height()).rev() {
         for i in 0..config.image_width() {
-            let u = (i as f64) / (config.image_width() as f64);
-            let v = (j as f64) / (config.image_height() as f64);
+            let mut pixel_color = Color::zero_vec();
+            for _ in 0..config.samples_per_pixel() {
+                let u = (i as f64 + random_f64()) / (config.image_width() as f64 - 1.0);
+                let v = (j as f64 + random_f64()) / (config.image_height() as f64 - 1.0);
 
-            let uv = lower_left_corner + horizontal.scaled(u) + vertical.scaled(v);
-            let r = Ray::new(&origin, &(uv - origin));
+                let r = camera.get_ray(u, v);
+                pixel_color += r.ray_color(&scene_objects);
+            }
 
-            color::print_color(&r.ray_color(&scene_objects));
+            color::print_color(&pixel_color, config.samples_per_pixel());
         }
         println!();
     }

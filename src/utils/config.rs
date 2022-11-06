@@ -15,6 +15,7 @@ pub struct Config {
     viewport_height: u64,
     focal_length: f64,
     origin: Vec3,
+    samples_per_pixel: u64,
 }
 
 impl Config {
@@ -54,6 +55,9 @@ impl Config {
                                     .as_f64()
                                     .unwrap_or_else(|| DEFAULT_CONFIG_OBJECT.origin.z()),
                             ),
+                            samples_per_pixel: config_object["image"]["samples_per_pixel"]
+                                .as_u64()
+                                .unwrap_or(DEFAULT_CONFIG_OBJECT.samples_per_pixel),
                         }
                     }
                     Err(_) => {
@@ -98,6 +102,10 @@ impl Config {
     pub fn origin(&self) -> &Vec3 {
         &self.origin
     }
+
+    pub fn samples_per_pixel(&self) -> u64 {
+        self.samples_per_pixel
+    }
 }
 
 const DEFAULT_CONFIG_OBJECT: Config = Config {
@@ -106,4 +114,5 @@ const DEFAULT_CONFIG_OBJECT: Config = Config {
     viewport_height: 2,
     focal_length: 1.0,
     origin: Vec3::new(0.0, 0.0, 0.0),
+    samples_per_pixel: 100,
 };

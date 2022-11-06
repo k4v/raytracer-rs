@@ -17,3 +17,13 @@ pub fn random_f64() -> f64 {
 pub fn random_f64_between(min_inclusive: f64, max_exclusive: f64) -> f64 {
     min_inclusive + (max_exclusive - min_inclusive) * random_f64()
 }
+
+pub fn clamp(x: f64, min: f64, max: f64) -> f64 {
+    if x < min {
+        min
+    } else if x > max {
+        max
+    } else {
+        x
+    }
+}
