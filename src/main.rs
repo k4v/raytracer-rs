@@ -2,13 +2,11 @@ pub mod tests;
 mod types;
 mod utils;
 
-use std::rc::Rc;
-
 use types::color;
 use types::vec3::Vec3;
 use utils::config::Config;
 
-use crate::types::{traceable::TraceableGroup, ray::Ray, sphere::Sphere};
+use crate::types::{ray::Ray, sphere::Sphere, traceable::TraceableGroup};
 
 fn main() {
     // Initial configuration object
@@ -27,8 +25,8 @@ fn main() {
     // Create scene objects
     let scene_objects = TraceableGroup {
         objects: vec![
-            Rc::new(Box::new(Sphere::new(&Vec3::new(0.0, 0.0, -1.0), 0.5).unwrap())),
-            Rc::new(Box::new(Sphere::new(&Vec3::new(0.0, -100.5, -1.0), 100.0).unwrap())),
+            Box::new(Sphere::new(&Vec3::new(0.0, 0.0, -1.0), 0.5).unwrap()),
+            Box::new(Sphere::new(&Vec3::new(0.0, -100.5, -1.0), 100.0).unwrap()),
         ],
     };
 

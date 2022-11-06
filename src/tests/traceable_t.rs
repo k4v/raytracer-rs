@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::{
-        types::{traceable::Traceable, ray::Ray, sphere::Sphere, vec3::Vec3},
+        types::{ray::Ray, sphere::Sphere, traceable::Traceable, vec3::Vec3},
         utils::constants::MAX_F,
     };
 

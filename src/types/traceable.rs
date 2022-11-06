@@ -1,7 +1,5 @@
 #![allow(dead_code)]
 
-use std::rc::Rc;
-
 use super::{ray::Ray, vec3::Vec3};
 
 pub type Point3 = Vec3;
@@ -46,7 +44,7 @@ pub trait Traceable {
 }
 
 pub struct TraceableGroup {
-    pub objects: Vec<Rc<Box<dyn Traceable>>>,
+    pub objects: Vec<Box<dyn Traceable>>,
 }
 
 impl Traceable for TraceableGroup {
@@ -79,7 +77,7 @@ impl TraceableGroup {
         self.objects.clear();
     }
 
-    pub fn add(&mut self, object: Rc<Box<dyn Traceable>>) {
+    pub fn add(&mut self, object: Box<dyn Traceable>) {
         self.objects.push(object);
     }
 }
