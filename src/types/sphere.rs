@@ -1,6 +1,6 @@
 use super::{
-    traceable::{HitRecord, Traceable},
     ray::Ray,
+    traceable::{HitRecord, Traceable},
     vec3::Vec3,
 };
 
