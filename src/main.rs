@@ -1,3 +1,4 @@
+mod components;
 pub mod tests;
 mod types;
 mod utils;
@@ -6,7 +7,7 @@ use types::color;
 use types::vec3::Vec3;
 use utils::config::Config;
 
-use crate::types::{ray::Ray, sphere::Sphere, traceable::TraceableGroup};
+use crate::components::{ray::Ray, sphere::Sphere, traceable::TraceableGroup};
 
 fn main() {
     // Initial configuration object

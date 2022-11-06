@@ -1,11 +1,11 @@
 #![allow(dead_code)]
 
-use crate::utils::constants::MAX_F;
-
-use super::color::Color;
+use crate::{
+    types::{color::Color, vec3::Vec3},
+    utils::utilities::MAX_F,
+};
 
 use super::traceable::{Point3, Traceable, TraceableGroup};
-use super::vec3::Vec3;
 
 #[derive(Debug)]
 pub struct Ray {

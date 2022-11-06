@@ -1,6 +1,8 @@
 #![allow(dead_code)]
 
-use super::{ray::Ray, vec3::Vec3};
+use crate::types::vec3::Vec3;
+
+use super::ray::Ray;
 
 pub type Point3 = Vec3;
 
