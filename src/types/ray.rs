@@ -1,11 +1,11 @@
 #![allow(dead_code)]
 
+use crate::utils::constants::MAX_F;
+
 use super::color::Color;
 
-use super::component::Component;
+use super::traceable::{Point3, Traceable, TraceableGroup};
 use super::vec3::Vec3;
-
-type Point3 = Vec3;
 
 #[derive(Debug)]
 pub struct Ray {
@@ -33,16 +33,10 @@ impl Ray {
         self._origin + self._direction.scaled(t)
     }
 
-    pub fn ray_color(&self, components: &Vec<Box<dyn Component>>) -> Color {
-        for component in components {
-            let intersection = component.intersects_ray(self);
-            if intersection.is_some() {
-                let normal = (self.at(intersection.unwrap()) - *component.center())
-                    .unit_vector()
-                    .expect("Ray component intersection invalid");
-                return Color::new(1.0 + normal.x(), 1.0 + normal.y(), 1.0 + normal.z())
-                    .scaled(0.5);
-            }
+    pub fn ray_color(&self, scene_objects: &TraceableGroup) -> Color {
+        let hit_record = scene_objects.intersects_ray(self, 0.0, MAX_F);
+        if hit_record.is_some() {
+            return (hit_record.unwrap().normal().to_owned() + Color::ones_vec()).scaled(0.5);
         }
 
         let t = (self

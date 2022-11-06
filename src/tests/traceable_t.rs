@@ -1,11 +1,8 @@
 #[cfg(test)]
 mod tests {
-    const DOUBLE_TEST_EPSILON: f64 = 0.00001;
-
-    use crate::types::{
-        component::{Component, Sphere},
-        ray::Ray,
-        vec3::Vec3,
+    use crate::{
+        types::{traceable::Traceable, ray::Ray, sphere::Sphere, vec3::Vec3},
+        utils::constants::MAX_F,
     };
 
     #[test]
@@ -29,23 +26,21 @@ mod tests {
         // Ray inside sphere
         {
             let ray = Ray::new(&center, &Vec3::new(0.0, 0.0, -1.0));
-            let intersection = sphere.unwrap().intersects_ray(&ray);
+            let intersection = sphere.unwrap().intersects_ray(&ray, 0.0, MAX_F);
             assert!(intersection.is_some());
-            assert!((-1.0 - intersection.unwrap()).abs() < DOUBLE_TEST_EPSILON);
         }
 
         // Ray tangential to sphere
         {
             let ray = Ray::new(&center, &Vec3::new(0.0, 1.0, 0.0));
-            let intersection = sphere.unwrap().intersects_ray(&ray);
+            let intersection = sphere.unwrap().intersects_ray(&ray, 0.0, MAX_F);
             assert!(intersection.is_some());
-            assert!((-1.0 - intersection.unwrap()).abs() < DOUBLE_TEST_EPSILON);
         }
 
         // Ray through sphere
         {
             let ray = Ray::new(&center, &Vec3::new(1.0, 1.0, -3.0));
-            assert!(sphere.unwrap().intersects_ray(&ray).is_some());
+            assert!(sphere.unwrap().intersects_ray(&ray, 0.0, MAX_F).is_some());
         }
     }
 
@@ -58,7 +53,11 @@ mod tests {
         // Ray outside and away from sphere
         {
             let ray = Ray::new(&Vec3::new(0.0, 1.0, -4.0), &Vec3::new(1.0, 1.0, -2.0));
-            assert!(sphere.as_ref().unwrap().intersects_ray(&ray).is_none());
+            assert!(sphere
+                .as_ref()
+                .unwrap()
+                .intersects_ray(&ray, 0.0, MAX_F)
+                .is_none());
         }
     }
 }
