@@ -1,7 +1,8 @@
+use crate::types::vec3::Vec3;
+
 use super::{
     ray::Ray,
     traceable::{HitRecord, Traceable},
-    vec3::Vec3,
 };
 
 #[derive(Copy, Clone)]

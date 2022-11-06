@@ -1,8 +1,9 @@
 #[cfg(test)]
 mod tests {
     use crate::{
-        types::{ray::Ray, sphere::Sphere, traceable::Traceable, vec3::Vec3},
-        utils::constants::MAX_F,
+        components::{ray::Ray, sphere::Sphere, traceable::Traceable},
+        types::vec3::Vec3,
+        utils::utilities::MAX_F,
     };
 
     #[test]
