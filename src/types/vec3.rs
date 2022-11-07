@@ -5,6 +5,8 @@ use std::ops::{Add, AddAssign, Neg, Sub, SubAssign};
 
 use serde::{Deserialize, Serialize};
 
+use crate::utils::utilities::{random_f64, random_f64_between};
+
 #[derive(PartialEq, PartialOrd, Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct Vec3 {
     _x: f64,
@@ -13,7 +15,7 @@ pub struct Vec3 {
 }
 
 impl Vec3 {
-    /// Create a new empty Vec3
+    /// Create a new Vec3 with the given coordinates
     pub const fn new(x: f64, y: f64, z: f64) -> Self {
         Vec3 {
             _x: x,
@@ -31,7 +33,23 @@ impl Vec3 {
         }
     }
 
-    pub fn x(&self) -> f64 {
+    pub fn random() -> Self {
+        Vec3 {
+            _x: random_f64(),
+            _y: random_f64(),
+            _z: random_f64(),
+        }
+    }
+
+    pub fn random_between(min_inclusive: f64, max_exclusive: f64) -> Self {
+        Vec3 {
+            _x: random_f64_between(min_inclusive, max_exclusive),
+            _y: random_f64_between(min_inclusive, max_exclusive),
+            _z: random_f64_between(min_inclusive, max_exclusive),
+        }
+    }
+
+    pub const fn x(&self) -> f64 {
         self._x
     }
 
@@ -39,7 +57,7 @@ impl Vec3 {
         &mut self._x
     }
 
-    pub fn y(&self) -> f64 {
+    pub const fn y(&self) -> f64 {
         self._y
     }
 
@@ -47,7 +65,7 @@ impl Vec3 {
         &mut self._y
     }
 
-    pub fn z(&self) -> f64 {
+    pub const fn z(&self) -> f64 {
         self._z
     }
 
@@ -104,7 +122,7 @@ impl Vec3 {
         }
     }
 
-    pub fn zero_vec() -> Self {
+    pub const fn zero_vec() -> Self {
         Vec3 {
             _x: 0.0,
             _y: 0.0,
@@ -112,7 +130,7 @@ impl Vec3 {
         }
     }
 
-    pub fn ones_vec() -> Self {
+    pub const fn ones_vec() -> Self {
         Vec3 {
             _x: 1.0,
             _y: 1.0,
