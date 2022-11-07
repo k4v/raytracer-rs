@@ -10,7 +10,7 @@ pub fn print_color(color: &Color, samples_per_pixel: u64) {
     let c = Color::new(
         (color.x() * scale).powf(0.5),
         (color.y() * scale).powf(0.5),
-        (color.z() * scale).powf(0.5)
+        (color.z() * scale).powf(0.5),
     );
 
     print!(

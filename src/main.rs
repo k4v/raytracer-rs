@@ -23,6 +23,7 @@ fn main() {
     let scene_objects = TraceableGroup {
         objects: vec![
             Box::new(Sphere::new(&Vec3::new(0.0, 0.0, -1.0), 0.5).unwrap()),
+            Box::new(Sphere::new(&Vec3::new(2.0, 1.5, -2.0), 0.5).unwrap()),
             Box::new(Sphere::new(&Vec3::new(0.0, -100.5, -1.0), 100.0).unwrap()),
         ],
     };

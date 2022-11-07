@@ -2,7 +2,7 @@
 
 use crate::{
     types::{color::Color, vec3::Vec3},
-    utils::utilities::{MAX_F64, random_unit_vector},
+    utils::utilities::{random_point_in_hemisphere, MAX_F64},
 };
 
 use super::traceable::{Point3, Traceable, TraceableGroup};
@@ -49,10 +49,12 @@ impl Ray {
             let point = hit_record.point();
             let normal = hit_record.normal();
 
-            let target = *point + *normal + random_unit_vector();
+            let target = *point + *normal + random_point_in_hemisphere(normal);
             let child_ray = Ray::new(point, &(target - *point));
 
-            return child_ray.ray_color_internal(scene_objects, depth-1).scaled(0.5);
+            return child_ray
+                .ray_color_internal(scene_objects, depth - 1)
+                .scaled(0.5);
         }
 
         let t = (self

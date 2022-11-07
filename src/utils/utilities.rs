@@ -29,6 +29,16 @@ pub fn random_point_in_unit_sphere() -> Vec3 {
     }
 }
 
+pub fn random_point_in_hemisphere(normal: &Vec3) -> Vec3 {
+    let point_in_unit_sphere = random_point_in_unit_sphere();
+    if point_in_unit_sphere.dot(normal) > 0.0 {
+        // In the same hemisphere as the normal
+        return point_in_unit_sphere;
+    } else {
+        return -point_in_unit_sphere;
+    }
+}
+
 pub fn random_unit_vector() -> Vec3 {
     random_point_in_unit_sphere().unit_vector().unwrap()
 }

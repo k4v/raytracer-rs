@@ -37,7 +37,7 @@ impl Vec3 {
         Vec3 {
             _x: random_f64(),
             _y: random_f64(),
-            _z: random_f64()
+            _z: random_f64(),
         }
     }
 
@@ -45,7 +45,7 @@ impl Vec3 {
         Vec3 {
             _x: random_f64_between(min_inclusive, max_exclusive),
             _y: random_f64_between(min_inclusive, max_exclusive),
-            _z: random_f64_between(min_inclusive, max_exclusive)
+            _z: random_f64_between(min_inclusive, max_exclusive),
         }
     }
 
