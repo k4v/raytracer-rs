@@ -3,7 +3,7 @@ mod tests {
     use crate::{
         components::{ray::Ray, sphere::Sphere, traceable::Traceable},
         types::vec3::Vec3,
-        utils::utilities::MAX_F,
+        utils::utilities::MAX_F64,
     };
 
     #[test]
@@ -27,21 +27,21 @@ mod tests {
         // Ray inside sphere
         {
             let ray = Ray::new(&center, &Vec3::new(0.0, 0.0, -1.0));
-            let intersection = sphere.unwrap().intersects_ray(&ray, 0.0, MAX_F);
+            let intersection = sphere.unwrap().intersects_ray(&ray, 0.0, MAX_F64);
             assert!(intersection.is_some());
         }
 
         // Ray tangential to sphere
         {
             let ray = Ray::new(&center, &Vec3::new(0.0, 1.0, 0.0));
-            let intersection = sphere.unwrap().intersects_ray(&ray, 0.0, MAX_F);
+            let intersection = sphere.unwrap().intersects_ray(&ray, 0.0, MAX_F64);
             assert!(intersection.is_some());
         }
 
         // Ray through sphere
         {
             let ray = Ray::new(&center, &Vec3::new(1.0, 1.0, -3.0));
-            assert!(sphere.unwrap().intersects_ray(&ray, 0.0, MAX_F).is_some());
+            assert!(sphere.unwrap().intersects_ray(&ray, 0.0, MAX_F64).is_some());
         }
     }
 
@@ -57,7 +57,7 @@ mod tests {
             assert!(sphere
                 .as_ref()
                 .unwrap()
-                .intersects_ray(&ray, 0.0, MAX_F)
+                .intersects_ray(&ray, 0.0, MAX_F64)
                 .is_none());
         }
     }

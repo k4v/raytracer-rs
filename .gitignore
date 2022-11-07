@@ -11,3 +11,4 @@ Cargo.lock
 
 # Development artifacts
 *.ppm
+.vscode/

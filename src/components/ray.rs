@@ -2,7 +2,7 @@
 
 use crate::{
     types::{color::Color, vec3::Vec3},
-    utils::utilities::MAX_F,
+    utils::utilities::{MAX_F64, random_unit_vector},
 };
 
 use super::traceable::{Point3, Traceable, TraceableGroup};
@@ -14,6 +14,8 @@ pub struct Ray {
 }
 
 impl Ray {
+    const MAX_CHILD_RAYS: usize = 50;
+
     pub fn new(origin: &Point3, direction: &Vec3) -> Self {
         Self {
             _origin: *origin,
@@ -34,9 +36,23 @@ impl Ray {
     }
 
     pub fn ray_color(&self, scene_objects: &TraceableGroup) -> Color {
-        let hit_record = scene_objects.intersects_ray(self, 0.0, MAX_F);
-        if hit_record.is_some() {
-            return (hit_record.unwrap().normal().to_owned() + Color::ones_vec()).scaled(0.5);
+        self.ray_color_internal(scene_objects, Ray::MAX_CHILD_RAYS)
+    }
+
+    fn ray_color_internal(&self, scene_objects: &TraceableGroup, depth: usize) -> Color {
+        if depth <= 0 {
+            return Color::new(0.0, 0.0, 0.0);
+        }
+
+        let hit_record_option = scene_objects.intersects_ray(self, 0.00001, MAX_F64);
+        if let Some(hit_record) = hit_record_option {
+            let point = hit_record.point();
+            let normal = hit_record.normal();
+
+            let target = *point + *normal + random_unit_vector();
+            let child_ray = Ray::new(point, &(target - *point));
+
+            return child_ray.ray_color_internal(scene_objects, depth-1).scaled(0.5);
         }
 
         let t = (self

@@ -32,6 +32,10 @@ impl HitRecord {
         };
     }
 
+    pub fn point(&self) -> &Point3 {
+        return &self.point;
+    }
+
     pub fn normal(&self) -> &Vec3 {
         return &self.normal;
     }

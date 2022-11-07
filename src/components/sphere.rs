@@ -26,6 +26,10 @@ impl Sphere {
     pub fn center(&self) -> &Vec3 {
         &self._center
     }
+
+    pub fn radius(&self) -> f64 {
+        self._radius
+    }
 }
 
 impl Traceable for Sphere {
@@ -55,11 +59,5 @@ impl Traceable for Sphere {
         let mut hit_record = HitRecord::new(root, _point, _normal, false);
         hit_record.set_face_normal(ray, &_normal);
         Some(hit_record)
-    }
-}
-
-impl Sphere {
-    pub fn radius(&self) -> f64 {
-        self._radius
     }
 }
