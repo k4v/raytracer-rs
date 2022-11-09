@@ -2,7 +2,10 @@
 
 use crate::{
     types::{color::Color, vec3::Vec3},
-    utils::utilities::{random_point_in_hemisphere, MAX_F64},
+    utils::{
+        config::{Config, DiffuseScatterMode},
+        utilities::{random_point_in_hemisphere, random_point_in_unit_sphere, MAX_F64},
+    },
 };
 
 use super::traceable::{Point3, Traceable, TraceableGroup};
@@ -14,8 +17,6 @@ pub struct Ray {
 }
 
 impl Ray {
-    const MAX_CHILD_RAYS: usize = 50;
-
     pub fn new(origin: &Point3, direction: &Vec3) -> Self {
         Self {
             _origin: *origin,
@@ -35,11 +36,20 @@ impl Ray {
         self._origin + self._direction.scaled(t)
     }
 
-    pub fn ray_color(&self, scene_objects: &TraceableGroup) -> Color {
-        self.ray_color_internal(scene_objects, Ray::MAX_CHILD_RAYS)
+    pub fn ray_color(&self, scene_objects: &TraceableGroup, scene_config: &Config) -> Color {
+        self.ray_color_internal(
+            scene_objects,
+            scene_config,
+            scene_config.rays_config().max_child_rays(),
+        )
     }
 
-    fn ray_color_internal(&self, scene_objects: &TraceableGroup, depth: usize) -> Color {
+    fn ray_color_internal(
+        &self,
+        scene_objects: &TraceableGroup,
+        scene_config: &Config,
+        depth: u64,
+    ) -> Color {
         if depth <= 0 {
             return Color::new(0.0, 0.0, 0.0);
         }
@@ -49,11 +59,19 @@ impl Ray {
             let point = hit_record.point();
             let normal = hit_record.normal();
 
-            let target = *point + *normal + random_point_in_hemisphere(normal);
+            let diffuse_scatter_mode = match scene_config.rays_config().diffuse_scatter_mode() {
+                DiffuseScatterMode::ApproxLambert => random_point_in_unit_sphere(),
+                DiffuseScatterMode::TrueLambert => {
+                    random_point_in_unit_sphere().unit_vector().unwrap()
+                }
+                DiffuseScatterMode::Hemispherical => random_point_in_hemisphere(normal),
+            };
+
+            let target = *point + *normal + diffuse_scatter_mode;
             let child_ray = Ray::new(point, &(target - *point));
 
             return child_ray
-                .ray_color_internal(scene_objects, depth - 1)
+                .ray_color_internal(scene_objects, scene_config, depth - 1)
                 .scaled(0.5);
         }
 
