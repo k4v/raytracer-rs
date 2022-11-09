@@ -4,6 +4,7 @@ use crate::{types::vec3::Vec3, utils::config::Config};
 
 use super::{ray::Ray, traceable::Point3};
 
+#[derive(Debug)]
 pub struct Camera {
     origin: Point3,
     lower_left_corner: Point3,
@@ -32,10 +33,10 @@ impl Camera {
 
     pub fn configure(configuration: &Config) -> Self {
         Camera::new(
-            configuration.origin(),
-            configuration.viewport_width(),
-            configuration.viewport_height(),
-            configuration.focal_length(),
+            configuration.camera_config().origin(),
+            configuration.camera_config().viewport_width(),
+            configuration.camera_config().viewport_height(),
+            configuration.camera_config().focal_length(),
         )
     }
 

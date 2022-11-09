@@ -1,0 +1,48 @@
+# Configuration of output image
+[image]
+  # Output image width
+  # Required
+  image_width = 1600
+
+  # Output image height
+  # Required
+  image_height = 1200
+
+  # Antialiasing mode and AA configuration
+  # Values: None | MSAA
+  # Default: "None"
+  aa_mode = "MSAA"
+
+  # Gamma correction factor for image
+  # Default: 1.0
+  gamma = 2.0
+
+# Configuration of scene camera
+[camera]
+  # Width of viewing screen
+  # Required
+  viewport_width = 4
+
+  # Height of viewing screen
+  # Required
+  viewport_height = 3
+
+  # Scene origin and camera position
+  # Default: (0.0, 0.0, 0.0)
+  origin = [0.0, 0.0, 0.0]
+
+  # Camera focal length
+  # Default: 1.0
+  focal_length = 1.0
+
+# Configuration of lights, rays and materials
+[rays]
+  # Maximum child rays from scattering
+  # Default: 50
+  max_child_rays = 100
+
+  # Method of scattering rays for diffuse materials
+  # Values: ApproxLambert | TrueLambert | Hemispherical
+  # Default: TrueLambert
+  diffuse_scatter_mode = "Hemispherical"
+
