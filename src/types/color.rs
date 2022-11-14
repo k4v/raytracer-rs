@@ -4,6 +4,9 @@ use super::vec3::Vec3;
 
 pub type Color = Vec3;
 
+pub const COLOR_BLACK: Color = Color::new(0.0, 0.0, 0.0);
+pub const COLOR_WHITE: Color = Color::new(1.0, 1.0, 1.0);
+
 pub fn print_color(color: &Color, samples_per_pixel: u64, gamma: f64) {
     let scale = 1.0 / (samples_per_pixel as f64);
 

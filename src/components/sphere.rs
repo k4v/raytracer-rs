@@ -1,34 +1,32 @@
-use crate::types::vec3::Vec3;
+use crate::types::{hit_record::HitRecord, material::Material, vec3::Vec3};
 
-use super::{
-    ray::Ray,
-    traceable::{HitRecord, Traceable},
-};
+use super::{ray::Ray, traceable::Traceable};
 
-#[derive(Copy, Clone)]
 pub struct Sphere {
-    _center: Vec3,
-    _radius: f64,
+    d_center: Vec3,
+    d_radius: f64,
+    d_material: Box<dyn Material>,
 }
 
 impl Sphere {
-    pub fn new(center: &Vec3, radius: f64) -> Result<Self, &str> {
+    pub fn new(center: &Vec3, radius: f64, material: Box<dyn Material>) -> Result<Self, &str> {
         if radius <= 0.0 {
             return Err("Sphere radius must be greater than 0");
         }
 
         Ok(Sphere {
-            _center: *center,
-            _radius: radius,
+            d_center: *center,
+            d_radius: radius,
+            d_material: material,
         })
     }
 
     pub fn center(&self) -> &Vec3 {
-        &self._center
+        &self.d_center
     }
 
     pub fn radius(&self) -> f64 {
-        self._radius
+        self.d_radius
     }
 }
 
@@ -56,7 +54,7 @@ impl Traceable for Sphere {
         let _point = ray.at(root);
         let _normal = (_point - *self.center()).scaled(1.0 / self.radius());
 
-        let mut hit_record = HitRecord::new(root, _point, _normal, false);
+        let mut hit_record = HitRecord::new(root, _point, _normal, false, &self.d_material);
         hit_record.set_face_normal(ray, &_normal);
         Some(hit_record)
     }
