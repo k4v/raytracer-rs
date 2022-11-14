@@ -45,4 +45,3 @@
   # Values: ApproxLambert | TrueLambert | Hemispherical
   # Default: TrueLambert
   diffuse_scatter_mode = "Hemispherical"
-
