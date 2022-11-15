@@ -9,6 +9,7 @@ use utils::config::Config;
 
 use crate::components::{camera::Camera, sphere::Sphere, traceable::TraceableGroup};
 use crate::types::color::Color;
+use crate::types::dielectric_mat::{DielectricMaterial, IOR_GLASS};
 use crate::types::diffuse_mat::DiffuseMaterial;
 use crate::types::metal_mat::MetalMaterial;
 use crate::utils::config::AntialiasingMode;
@@ -25,8 +26,8 @@ fn main() {
     // Create scene objects
     let ground_material = Box::new(DiffuseMaterial::new(&Color::new(0.8, 0.8, 0.0)));
     let center_material = Box::new(DiffuseMaterial::new(&Color::new(0.7, 0.3, 0.3)));
-    let left_material = Box::new(MetalMaterial::new(&Color::new(0.8, 0.8, 0.8), 0.5));
-    let right_material = Box::new(MetalMaterial::new(&Color::new(0.8, 0.6, 0.2), 1.0));
+    let left_material = Box::new(MetalMaterial::new(&Color::new(0.8, 0.8, 0.8), 0.2));
+    let right_material = Box::new(DielectricMaterial::new(IOR_GLASS));
 
     let scene_objects = TraceableGroup {
         objects: vec![

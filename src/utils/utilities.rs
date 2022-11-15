@@ -43,6 +43,22 @@ pub fn random_unit_vector() -> Vec3 {
     random_point_in_unit_sphere().unit_vector().unwrap()
 }
 
+pub fn fmin(lhs: f64, rhs: f64) -> f64 {
+    if lhs < rhs {
+        lhs
+    } else {
+        rhs
+    }
+}
+
+pub fn fmax(lhs: f64, rhs: f64) -> f64 {
+    if lhs > rhs {
+        lhs
+    } else {
+        rhs
+    }
+}
+
 pub fn clamp(x: f64, min: f64, max: f64) -> f64 {
     if x < min {
         min
