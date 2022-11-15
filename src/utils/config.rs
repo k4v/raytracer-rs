@@ -144,13 +144,11 @@ impl Config {
             }
 
             if config_object.camera.focal_length.is_none() {
-                config_object.camera.focal_length =
-                    DEFAULT_CONFIG_OBJECT.camera.focal_length;
+                config_object.camera.focal_length = DEFAULT_CONFIG_OBJECT.camera.focal_length;
             }
 
             if config_object.rays.max_child_rays.is_none() {
-                config_object.rays.max_child_rays =
-                    DEFAULT_CONFIG_OBJECT.rays.max_child_rays;
+                config_object.rays.max_child_rays = DEFAULT_CONFIG_OBJECT.rays.max_child_rays;
             }
 
             if config_object.rays.diffuse_scatter_mode.is_none() {

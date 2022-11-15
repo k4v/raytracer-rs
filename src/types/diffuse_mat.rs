@@ -1,4 +1,4 @@
-#[allow(dead_code, unused_variables)]
+#[allow(dead_code)]
 use crate::components::ray::Ray;
 use crate::utils::config::{Config, DiffuseScatterMode};
 use crate::utils::utilities::{random_point_in_hemisphere, random_point_in_unit_sphere};

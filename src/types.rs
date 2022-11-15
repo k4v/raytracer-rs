@@ -1,4 +1,5 @@
 pub mod color;
+pub mod dielectric_mat;
 pub mod diffuse_mat;
 pub mod hit_record;
 pub mod material;

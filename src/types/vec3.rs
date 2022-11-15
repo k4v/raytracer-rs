@@ -5,7 +5,7 @@ use std::ops::{Add, AddAssign, Mul, Neg, Sub, SubAssign};
 
 use serde::{Deserialize, Serialize};
 
-use crate::utils::utilities::{random_f64, random_f64_between};
+use crate::utils::utilities::{fmin, random_f64, random_f64_between};
 
 #[derive(PartialEq, PartialOrd, Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct Vec3 {
@@ -89,18 +89,6 @@ impl Vec3 {
         self
     }
 
-    pub fn scaled(&self, factor: f64) -> Self {
-        Self {
-            d_x: self.d_x * factor,
-            d_y: self.d_y * factor,
-            d_z: self.d_z * factor,
-        }
-    }
-
-    pub fn reflect(&self, normal: &Vec3) -> Self {
-        *self - normal.scaled(2.0 * self.dot(normal))
-    }
-
     pub fn unit_vector(&self) -> Result<Vec3, &str> {
         let length = self.len();
 
@@ -124,6 +112,28 @@ impl Vec3 {
             d_y: self.d_z * rhs.d_x - self.d_x * rhs.d_z,
             d_z: self.d_x * rhs.d_y - self.d_y * rhs.d_x,
         }
+    }
+}
+
+/// Implementation of utility functions
+impl Vec3 {
+    pub fn scaled(&self, factor: f64) -> Self {
+        Self {
+            d_x: self.d_x * factor,
+            d_y: self.d_y * factor,
+            d_z: self.d_z * factor,
+        }
+    }
+
+    pub fn reflect(&self, normal: &Vec3) -> Self {
+        *self - normal.scaled(2.0 * self.dot(normal))
+    }
+
+    pub fn refract(&self, normal: &Vec3, relative_ior: f64) -> Self {
+        let cos_theta = fmin(self.dot(normal) * -1.0, 1.0);
+        let ray_out_orth = (*self + normal.scaled(cos_theta)).scaled(relative_ior);
+        let ray_out_prll = normal.scaled(-(1.0 - ray_out_orth.len_squared()).abs().sqrt());
+        return ray_out_orth + ray_out_prll;
     }
 
     pub fn is_nearly_zero(&self) -> bool {
